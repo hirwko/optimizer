@@ -1,15 +1,13 @@
-
-
 module.exports = {
   TOKEN: "",
   language: "ja",
   ownerID: ["1106711955563098152", ""], 
-  mongodbUri : "mongodb+srv://tatsumihirako:Revel001@discordbot.wdmjg.mongodb.net/?retryWrites=true&w=majority",
+  mongodbUri: "mongodb+srv://tatsumihirako:Revel001@discordbot.wdmjg.mongodb.net/?retryWrites=true&w=majority",
   setupFilePath: './commands/setup.json',
   commandsDir: './commands',  
   embedColor: "#1db954",
-  activityName: "chilling", 
-  activityType: "LISTENING",  // Available activity types : LISTENING , PLAYING
+  activityName: "music", 
+  activityType: "LISTENING",  // Available activity types: LISTENING, PLAYING
   SupportServer: "https://discord.gg/GSsbGwV8vt",
   embedTimeout: 5, 
   errorLog: "", 
@@ -21,5 +19,6 @@ module.exports = {
       port:  5017,
       secure: false
     }
-  ]
+  ],
+  prefix: "-"  // Add the prefix here
 }
