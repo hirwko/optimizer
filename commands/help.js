@@ -9,7 +9,9 @@ module.exports = {
   description: "Get information about the bot",
   permissions: "0x0000000000000800",
   options: [],
-  run: async (client, interaction, lang) => {
+
+  // Adjusted the method name to 'execute' for consistency with other command files
+  execute: async (message, args, client) => {
     try {
       const botName = client.user.username;
 
@@ -31,39 +33,39 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(config.embedColor || "#7289DA")
-        .setTitle(lang.help.embed.title.replace("{botName}", botName))
+        .setTitle(`Bot Information: ${botName}`)
         .setAuthor({
-          name: lang.help.embed.author,
+          name: "Bot Help",
           iconURL: musicIcons.alertIcon,
           url: config.SupportServer
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
-        .setDescription(lang.help.embed.description
-          .replace("{botName}", botName)
-          .replace("{totalCommands}", totalCommands)
-          .replace("{totalServers}", totalServers)
-          .replace("{totalUsers}", totalUsers)
-          .replace("{uptimeString}", uptimeString)
-          .replace("{ping}", ping)
-        )
+        .setDescription(`
+          **Bot Stats:**
+          - Total Commands: ${totalCommands}
+          - Total Servers: ${totalServers}
+          - Total Users: ${totalUsers}
+          - Uptime: ${uptimeString}
+          - Ping: ${ping}ms
+        `)
         .addFields(
           {
-            name: lang.help.embed.availableCommands,
+            name: "Available Commands",
             value: commandFiles.map(file => {
               const command = require(path.join(commandsPath, file));
-              return `\`/${command.name}\` - ${command.description || lang.help.embed.noDescription}`;
-            }).join('\n') || lang.help.embed.noCommands
+              return `\`$${command.name}\` - ${command.description || 'No description available'}`;
+            }).join('\n') || 'No commands available.'
           }
         )
-        .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
+        .setFooter({ text: 'Bot Footer', iconURL: musicIcons.heartIcon })
         .setTimestamp()
         .setImage('https://i.imgur.com/5OocFlP.gif'); // Add your banner image URL here
 
-      return interaction.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] });
     } catch (e) {
       console.error(e);
-      return interaction.reply({
-        content: lang.help.embed.error,
+      return message.reply({
+        content: "An error occurred while processing the help command.",
         ephemeral: true,
       });
     }
