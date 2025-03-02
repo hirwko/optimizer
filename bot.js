@@ -42,8 +42,8 @@ client.on('messageCreate', (message) => {
     // Ignore bot messages
     if (message.author.bot) return;
 
-    // Get the prefix from config
-    const prefix = config.prefix || '-';  // Fallback to '-' if no prefix is specified in config
+    // Set the prefix to '$'
+    const prefix = '$';  // Changed to '$'
 
     // Check if the message starts with the prefix
     if (!message.content.startsWith(prefix)) return;
