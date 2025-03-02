@@ -56,7 +56,8 @@ module.exports = {
           }
         )
         .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
-        .setTimestamp();
+        .setTimestamp()
+        .setImage('https://i.imgur.com/5OocFlP.gif'); // Add your banner image URL here
 
       return interaction.reply({ embeds: [embed] });
     } catch (e) {
