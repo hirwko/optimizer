@@ -2,7 +2,7 @@
 
 module.exports = {
   TOKEN: "",
-  language: "en",
+  language: "ja",
   ownerID: ["1106711955563098152", ""], 
   mongodbUri : "mongodb+srv://tatsumihirako:Revel001@discordbot.wdmjg.mongodb.net/?retryWrites=true&w=majority",
   setupFilePath: './commands/setup.json',
