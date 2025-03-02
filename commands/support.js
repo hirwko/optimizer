@@ -9,6 +9,9 @@ module.exports = {
     options: [],
     run: async (client, interaction, lang) => {
         try {
+            // Acknowledge the interaction to prevent timeout
+            await interaction.deferReply();
+
             // Links to replace the placeholders with
             const supportServerLink = "https://discord.gg/GGYYCWEaP4";
             const instagramLink = "https://instagram.com/@wanselq";  // Instagram link
@@ -25,15 +28,15 @@ module.exports = {
                 })
                 .setDescription(lang.support.embed.description
                     .replace("{supportServerLink}", supportServerLink)  // Discord support server
-                    .replace("{instagramLink}", instagramLink)  // Replaced with Instagram link
-                    .replace("{facebookLink}", facebookLink)  // Replaced with Facebook link
-                    .replace("{soundcloudLink}", soundcloudLink)  // Replaced with Soundcloud link
+                    .replace("{instagramLink}", instagramLink)  // Instagram link
+                    .replace("{facebookLink}", facebookLink)  // Facebook link
+                    .replace("{soundcloudLink}", soundcloudLink)  // Soundcloud link
                 )
                 .setImage('https://cdn.discordapp.com/attachments/1300383206712934513/1314821125754195978/a_1c5c4f341e4f508b06f97b0f04b7cf9a.gif?ex=67c53998&is=67c3e818&hm=a2f276f56c027763f98ddfe27fd7068d899f71dd073db6788f85196d95f33339&')
                 .setTimestamp();
 
             // Send the embed reply
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } catch (e) {
             console.error(e);
             const errorEmbed = new EmbedBuilder()
@@ -46,7 +49,8 @@ module.exports = {
                 .setDescription(lang.support.embed.errorDescription)
                 .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon });
 
-            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            // Send the error embed reply
+            await interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
         }
     },
 };
