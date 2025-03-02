@@ -5,7 +5,6 @@ const path = require('path');
 const { initializePlayer } = require('./player');
 const { connectToDatabase } = require('./mongodb');
 const colors = require('./UI/colors/colors');
-const DisTube = require('distube');  // Importing DisTube
 require('dotenv').config();
 
 const client = new Client({
@@ -17,15 +16,9 @@ const client = new Client({
 client.config = config;
 initializePlayer(client);
 
-// Create a DisTube instance to manage music playback (remove searchSongs)
-client.distube = new DisTube.DisTube(client, { 
-    emitNewSongOnly: true,  // Only emit when a new song starts playing
-});
-
 // Log when the bot is ready
 client.on("ready", () => {
     console.log(`${colors.cyan}[ SYSTEM ]${colors.reset} ${colors.green}Client logged as ${colors.yellow}${client.user.tag}${colors.reset}`);
-    console.log(`${colors.cyan}[ MUSIC ]${colors.reset} ${colors.green}Riffy Music System Ready 🎵${colors.reset}`);
     console.log(`${colors.cyan}[ TIME ]${colors.reset} ${colors.gray}${new Date().toISOString().replace('T', ' ').split('.')[0]}${colors.reset}`);
     client.riffy.init(client.user.id);
 });
@@ -35,7 +28,7 @@ fs.readdir("./events", (_err, files) => {
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
         const event = require(`./events/${file}`);
-        let eventName = file.split(".")[0]; 
+        let eventName = file.split(".")[0];
         client.on(eventName, event.bind(null, client));
         delete require.cache[require.resolve(`./events/${file}`)];
     });
@@ -96,42 +89,6 @@ client.on("raw", (d) => {
     const { GatewayDispatchEvents } = require("discord.js");
     if (![GatewayDispatchEvents.VoiceStateUpdate, GatewayDispatchEvents.VoiceServerUpdate].includes(d.t)) return;
     client.riffy.updateVoiceState(d);
-});
-
-// Add loop functionality for music
-client.distube.on('finish', (queue) => {
-    if (queue.looping) {
-        // Re-queue the current song if looping is enabled
-        queue.play(queue.songs[0].url);
-    }
-});
-
-// Loop command for toggling looping behavior
-client.commands.push({
-    name: 'loop',
-    description: 'Toggles looping for the current song.',
-    async execute(message, args) {
-        const queue = client.distube.getQueue(message);
-        if (!queue) {
-            return message.reply("There is no song currently playing.");
-        }
-
-        if (args[0] === 'on') {
-            if (queue.looping) {
-                return message.reply("The song is already looping.");
-            }
-            queue.looping = true;
-            message.channel.send("The current song will now loop indefinitely.");
-        } else if (args[0] === 'off') {
-            if (!queue.looping) {
-                return message.reply("The song is not looping.");
-            }
-            queue.looping = false;
-            message.channel.send("The loop has been disabled. The next song will play.");
-        } else {
-            message.reply("Please specify either `-loop on` or `-loop off`.");
-        }
-    },
 });
 
 // Login to the bot
