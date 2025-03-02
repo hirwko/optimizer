@@ -16,42 +16,25 @@ const client = new Client({
 client.config = config;
 initializePlayer(client);
 
+// Create a Map to store commands
+client.commands = new Map();
+
+// Read commands from the directory and load them into the commands Map
+fs.readdir(config.commandsDir, (err, files) => {
+    if (err) throw err;
+    files.forEach((f) => {
+        if (f.endsWith(".js")) {
+            const props = require(`${config.commandsDir}/${f}`);
+            client.commands.set(props.name, props);
+        }
+    });
+});
+
 // Log when the bot is ready
 client.on("ready", () => {
     console.log(`${colors.cyan}[ SYSTEM ]${colors.reset} ${colors.green}Client logged as ${colors.yellow}${client.user.tag}${colors.reset}`);
     console.log(`${colors.cyan}[ TIME ]${colors.reset} ${colors.gray}${new Date().toISOString().replace('T', ' ').split('.')[0]}${colors.reset}`);
     client.riffy.init(client.user.id);
-});
-
-// Read events and commands
-fs.readdir("./events", (_err, files) => {
-    files.forEach((file) => {
-        if (!file.endsWith(".js")) return;
-        const event = require(`./events/${file}`);
-        let eventName = file.split(".")[0];
-        client.on(eventName, event.bind(null, client));
-        delete require.cache[require.resolve(`./events/${file}`)];
-    });
-});
-
-// Read commands
-client.commands = [];
-fs.readdir(config.commandsDir, (err, files) => {
-    if (err) throw err;
-    files.forEach(async (f) => {
-        try {
-            if (f.endsWith(".js")) {
-                let props = require(`${config.commandsDir}/${f}`);
-                client.commands.push({
-                    name: props.name,
-                    description: props.description,
-                    options: props.options,
-                });
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    });
 });
 
 // Handle message commands
@@ -69,18 +52,19 @@ client.on('messageCreate', (message) => {
     const args = message.content.slice(prefix.length).trim().split(/\s+/);
     const commandName = args.shift().toLowerCase();
 
-    // Check if the command exists in the commands array
-    const command = client.commands.find(cmd => cmd.name === commandName);
+    // Check if the command exists in the commands map
+    const command = client.commands.get(commandName);
 
     if (command) {
         // If the command exists, execute it
         try {
-            const commandFile = require(`${config.commandsDir}/${command.name}.js`);
-            commandFile.execute(message, args, client);
+            command.execute(message, args, client);
         } catch (err) {
             console.error(err);
             message.reply('There was an error trying to execute that command!');
         }
+    } else {
+        message.reply(`Unknown command: ${commandName}`);
     }
 });
 
