@@ -62,7 +62,7 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) return;
 
     // Get the prefix from config
-    const prefix = config.prefix || '!';  // Fallback to '!' if no prefix is specified in config
+    const prefix = config.prefix || '-';  // Fallback to '!' if no prefix is specified in config
 
     // Check if the message starts with the prefix
     if (!message.content.startsWith(prefix)) return;
