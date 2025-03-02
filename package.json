@@ -11,6 +11,7 @@
     "musicard": "^2.0.5",
     "node-fetch": "^2.7.0",
     "riffy": "^1.0.3",
+    "distube": "^5.0.6",
     "songcard": "^1.2.13"
   },
   "scripts": {
