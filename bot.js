@@ -58,11 +58,11 @@ fs.readdir(config.commandsDir, (err, files) => {
 
 // Message handling for prefix commands
 client.on('messageCreate', (message) => {
-    // Check if the message is from a bot
+    // Ignore bot messages
     if (message.author.bot) return;
 
-    // Define your prefix
-    const prefix = config.prefix || '-';  // You can set the default prefix in config.js
+    // Get the prefix from config
+    const prefix = config.prefix || '!';  // Fallback to '!' if no prefix is specified in config
 
     // Check if the message starts with the prefix
     if (!message.content.startsWith(prefix)) return;
@@ -132,5 +132,5 @@ app.listen(port, () => {
     console.log(`${colors.cyan}[ SERVER ]${colors.reset} ${colors.green}Online ✅${colors.reset}`);
     console.log(`${colors.cyan}[ PORT ]${colors.reset} ${colors.yellow}http://localhost:${port}${colors.reset}`);
     console.log(`${colors.cyan}[ TIME ]${colors.reset} ${colors.gray}${new Date().toISOString().replace('T', ' ').split('.')[0]}${colors.reset}`);
-    console.log(`${colors.cyan}[ USER ]${colors.reset} ${colors.yellow}HIRAKO!${colors.reset}`);
+    console.log(`${colors.cyan}[ USER ]${colors.reset} ${colors.yellow}HIRAKO!{colors.reset}`);
 });
