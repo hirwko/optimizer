@@ -1,3 +1,4 @@
+
 const { EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
@@ -9,9 +10,7 @@ module.exports = {
   description: "Get information about the bot",
   permissions: "0x0000000000000800",
   options: [],
-
-  // Adjusted the method name to 'execute' for consistency with other command files
-  execute: async (message, args, client) => {
+  run: async (client, interaction, lang) => {
     try {
       const botName = client.user.username;
 
@@ -33,39 +32,38 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(config.embedColor || "#7289DA")
-        .setTitle(`Bot Information: ${botName}`)
+        .setTitle(lang.help.embed.title.replace("{botName}", botName))
         .setAuthor({
-          name: "Bot Help",
+          name: lang.help.embed.author,
           iconURL: musicIcons.alertIcon,
           url: config.SupportServer
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
-        .setDescription(`
-          **Bot Stats:**
-          - Total Commands: ${totalCommands}
-          - Total Servers: ${totalServers}
-          - Total Users: ${totalUsers}
-          - Uptime: ${uptimeString}
-          - Ping: ${ping}ms
-        `)
+        .setDescription(lang.help.embed.description
+          .replace("{botName}", botName)
+          .replace("{totalCommands}", totalCommands)
+          .replace("{totalServers}", totalServers)
+          .replace("{totalUsers}", totalUsers)
+          .replace("{uptimeString}", uptimeString)
+          .replace("{ping}", ping)
+        )
         .addFields(
           {
-            name: "Available Commands",
+            name: lang.help.embed.availableCommands,
             value: commandFiles.map(file => {
               const command = require(path.join(commandsPath, file));
-              return `\`$${command.name}\` - ${command.description || 'No description available'}`;
-            }).join('\n') || 'No commands available.'
+              return `\`/${command.name}\` - ${command.description || lang.help.embed.noDescription}`;
+            }).join('\n') || lang.help.embed.noCommands
           }
         )
-        .setFooter({ text: 'made by hirako!', iconURL: musicIcons.heartIcon })
-        .setTimestamp()
-        .setImage('https://i.imgur.com/5OocFlP.gif'); // Add your banner image URL here
+        .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
+        .setTimestamp();
 
-      return message.reply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     } catch (e) {
       console.error(e);
-      return message.reply({
-        content: "An error occurred while processing the help command.",
+      return interaction.reply({
+        content: lang.help.embed.error,
         ephemeral: true,
       });
     }
