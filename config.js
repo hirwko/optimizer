@@ -20,5 +20,4 @@ module.exports = {
       secure: false
     }
   ],
-  prefix: "$"  // Set prefix to '$' here
 }
