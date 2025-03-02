@@ -1,15 +1,15 @@
-const { EmbedBuilder } = require('discord.js');
+
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const { playlistCollection } = require('../mongodb.js');
 const musicIcons = require('../UI/icons/musicicons.js');
 const config = require('../config.js');
 
-async function addSong(client, message, args, lang) {
+async function addSong(client, interaction, lang) {
     try {
-        const playlistName = args[0];
-        const songInput = args.slice(1).join(' '); // Get the song input
-        const userId = message.author.id;
+        const playlistName = interaction.options.getString('playlist');
+        const songInput = interaction.options.getString('input');
+        const userId = interaction.user.id;
 
-        // Check if the playlist exists in the database
         const playlist = await playlistCollection.findOne({ name: playlistName });
         if (!playlist) {
             const embed = new EmbedBuilder()
@@ -22,7 +22,7 @@ async function addSong(client, message, args, lang) {
                 .setDescription(lang.addsong.embed.playlistNotFoundDescription)
                 .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
                 .setTimestamp();
-            await message.reply({ embeds: [embed] });
+            await interaction.reply({ embeds: [embed], ephemeral: true });
             return;
         }
 
@@ -37,7 +37,7 @@ async function addSong(client, message, args, lang) {
                 .setDescription(lang.addsong.embed.accessDeniedDescription)
                 .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
                 .setTimestamp();
-            await message.reply({ embeds: [embed] });
+            await interaction.reply({ embeds: [embed], ephemeral: true });
             return;
         }
 
@@ -50,7 +50,6 @@ async function addSong(client, message, args, lang) {
             song = { name: songInput };
         }
 
-        // Update the playlist in the database with the new song
         await playlistCollection.updateOne(
             { name: playlistName },
             { $push: { songs: song } }
@@ -67,7 +66,7 @@ async function addSong(client, message, args, lang) {
             .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
             .setTimestamp();
 
-        await message.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
     } catch (error) {
         console.error('Error adding song:', error);
         const errorEmbed = new EmbedBuilder()
@@ -78,10 +77,10 @@ async function addSong(client, message, args, lang) {
                 url: config.SupportServer
             })
             .setDescription(lang.addsong.embed.errorDescription)
-            .setFooter({ text: 'Made by Hirako!', iconURL: musicIcons.heartIcon })
+            .setFooter({ text: lang.footer, iconURL: musicIcons.heartIcon })
             .setTimestamp();
 
-        await message.reply({ embeds: [errorEmbed] });
+        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
     }
 }
 
@@ -89,5 +88,19 @@ module.exports = {
     name: 'addsong',
     description: 'Add a song to a playlist',
     permissions: '0x0000000000000800',
+    options: [
+        {
+            name: 'playlist',
+            description: 'Enter playlist name',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        },
+        {
+            name: 'input',
+            description: 'Enter song name or URL',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        }
+    ],
     run: addSong
 };
