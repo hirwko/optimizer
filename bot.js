@@ -5,7 +5,7 @@ const path = require('path');
 const { initializePlayer } = require('./player');
 const { connectToDatabase } = require('./mongodb');
 const colors = require('./UI/colors/colors');
-const DisTube = require('distube');  // Assuming you are using DisTube for music playback
+const DisTube = require('distube');  // Importing DisTube
 require('dotenv').config();
 
 const client = new Client({
@@ -17,8 +17,10 @@ const client = new Client({
 client.config = config;
 initializePlayer(client);
 
-// Create a DisTube instance to manage music playback
-client.distube = new DisTube.DisTube(client, { searchSongs: true, emitNewSongOnly: true });
+// Create a DisTube instance to manage music playback (remove searchSongs)
+client.distube = new DisTube.DisTube(client, { 
+    emitNewSongOnly: true,  // Only emit when a new song starts playing
+});
 
 // Log when the bot is ready
 client.on("ready", () => {
