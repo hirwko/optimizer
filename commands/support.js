@@ -1,4 +1,3 @@
-
 const { EmbedBuilder } = require('discord.js');
 const config = require("../config.js");
 const musicIcons = require('../UI/icons/musicicons.js');
@@ -10,11 +9,13 @@ module.exports = {
     options: [],
     run: async (client, interaction, lang) => {
         try {
+            // Links to replace the placeholders with
             const supportServerLink = "https://discord.gg/GGYYCWEaP4";
-            const githubLink = "https://github.com/hirwko";
-            const replitLink = "https://instagram.com/@wanselq";
-            const youtubeLink = "https://soundcloud.com/tatsumihirako/sets/heaven";
+            const instagramLink = "https://instagram.com/@wanselq";  // Instagram link
+            const facebookLink = "https://www.facebook.com/hirakoisdead";  // Facebook link
+            const soundcloudLink = "https://soundcloud.com/tatsumihirako/sets/heaven";  // Soundcloud link
 
+            // Embed creation
             const embed = new EmbedBuilder()
                 .setColor('#b300ff')
                 .setAuthor({
@@ -23,14 +24,15 @@ module.exports = {
                     url: config.SupportServer
                 })
                 .setDescription(lang.support.embed.description
-                    .replace("{supportServerLink}", supportServerLink)
-                    .replace("{githubLink}", githubLink)
-                    .replace("{replitLink}", Instagram)
-                    .replace("{youtubeLink}", Soundcloud)
+                    .replace("{supportServerLink}", supportServerLink)  // Discord support server
+                    .replace("{instagramLink}", instagramLink)  // Replaced with Instagram link
+                    .replace("{facebookLink}", facebookLink)  // Replaced with Facebook link
+                    .replace("{soundcloudLink}", soundcloudLink)  // Replaced with Soundcloud link
                 )
                 .setImage('https://cdn.discordapp.com/attachments/1300383206712934513/1314821125754195978/a_1c5c4f341e4f508b06f97b0f04b7cf9a.gif?ex=67c53998&is=67c3e818&hm=a2f276f56c027763f98ddfe27fd7068d899f71dd073db6788f85196d95f33339&')
                 .setTimestamp();
 
+            // Send the embed reply
             await interaction.reply({ embeds: [embed] });
         } catch (e) {
             console.error(e);
