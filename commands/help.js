@@ -57,7 +57,7 @@ module.exports = {
             }).join('\n') || 'No commands available.'
           }
         )
-        .setFooter({ text: 'Bot Footer', iconURL: musicIcons.heartIcon })
+        .setFooter({ text: 'made by hirako!', iconURL: musicIcons.heartIcon })
         .setTimestamp()
         .setImage('https://i.imgur.com/5OocFlP.gif'); // Add your banner image URL here
 
