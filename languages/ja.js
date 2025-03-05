@@ -255,7 +255,7 @@ module.exports = {
     support: {
       embed: {
           authorName: "サポートサーバー",
-          description: "➡️ **サポートと更新情報のためにDiscordサーバーに参加：**\n- Discord - {supportServerLink}\n\n➡️ **フォローする：**\n- GitHub - {githubLink}\n- Replit - {replitLink}\n- YouTube - {youtubeLink}",
+          description: "<:hirako_chill:1328437141772042300> **Discordサーバーに参加してください：**\n- Discord - {supportServerLink}\n\n**私を追加してください:**\n<:1bows:1167147252691767359> Soundcloud - {https://soundcloud.com/tatsumihirako/sets/heaven}\n<:1bows:1167147252691767359> Instagram - {https://instagram.com/@wanselq}\n<:1bows:1167147252691767359> Facebook - {https://www.facebook.com/hirakoisdead}",
           error: "エラー",
           errorDescription: "- リクエストの処理中にエラーが発生しました。"
       }
