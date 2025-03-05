@@ -1,6 +1,6 @@
 module.exports = {
   TOKEN: "",  // Your bot token here
-  language: "ja",  // Set the language if needed
+  language: "en",  // Set the language if needed
   ownerID: ["1106711955563098152", ""],  // Add owner ID(s)
   mongodbUri: "mongodb+srv://tatsumihirako:Revel001@discordbot.wdmjg.mongodb.net/?retryWrites=true&w=majority",  // Your MongoDB connection URI
   setupFilePath: './commands/setup.json',  // Path to setup file
