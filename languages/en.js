@@ -255,7 +255,7 @@ module.exports = {
   support: {
     embed: {
         authorName: "Support Server",
-        description: "<:hirako_chill:1328437141772042300> **Join our Discord server for support and updates:**\n- Discord - {supportServerLink}\n\n<a:ChikaJump:1061160981339844688> **Add me on:**\n<:1bows:1167147252691767359> Soundcloud - {https://soundcloud.com/tatsumihirako/sets/heaven}\n<:1bows:1167147252691767359> Instagram - {https://instagram.com/@wanselq}\n<:1bows:1167147252691767359> Facebook - {https://www.facebook.com/hirakoisdead}",
+        description: "<:OuchBully:1346367480251289633>  **Join our Discord server for support and updates:**\n- Discord - {supportServerLink}\n\n<:a_anime_blush_cute_kawaii_uwu:1343811095940304989> **Add me on:**\n<a:cyan_ribbon:1343810667379032095> Soundcloud - {soundcloudLink}\n<a:cyan_ribbon:1343810667379032095> Instagram - {instagramLink}\n<a:cyan_ribbon:1343810667379032095> Facebook - {facebookLink}",
         error: "Error",
         errorDescription: "- An error occurred while processing your request."
     }
