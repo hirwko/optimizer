@@ -1,3 +1,4 @@
+
 const { Riffy, Player } = require("riffy");
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, PermissionsBitField } = require("discord.js");
 const { requesters } = require("./commands/play");
@@ -102,7 +103,7 @@ function initializePlayer(client) {
                 iconURL: musicIcons.playerIcon,
                 url: config.SupportServer
             })
-            .setFooter({ text: `Developed by hirako | Only for cuddles`, iconURL: musicIcons.heartIcon })
+            .setFooter({ text: `Developed by Hirako | Only for cuddles`, iconURL: musicIcons.heartIcon })
             .setTimestamp()
             .setDescription(  
                 `- **Title:** [${track.info.title}](${track.info.uri})\n` +
