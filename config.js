@@ -10,7 +10,7 @@ module.exports = {
   embedColor: "#1db954",  // Embed color
   activityName: "music",  // Activity name (what the bot is doing)
   activityType: "LISTENING",  // Activity type (LISTENING, PLAYING)
-  SupportServer: "https://discord.gg/GSsbGwV8vt",  // Support server link
+  SupportServer: "https://discord.gg/nuzzles",  // Support server link
   embedTimeout: 5,  // Embed timeout (in seconds)
   errorLog: "",  // Log error path (if required)
   nodes: [
