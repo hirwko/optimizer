@@ -13,10 +13,10 @@ module.exports = {
             await interaction.deferReply();
 
             // Links to replace the placeholders with
-            const supportServerLink = "https://discord.gg/GGYYCWEaP4";
-            const instagramLink = "https://instagram.com/@wanselq";  // Instagram link
+            const supportServerLink = "https://discord.gg/cuddlez";
+            const instagramLink = "https://instagram.com/@yuknzxl";  // Instagram link
             const facebookLink = "https://www.facebook.com/hirakoisdead";  // Facebook link
-            const soundcloudLink = "https://soundcloud.com/tatsumihirako/sets/heaven";  // Soundcloud link
+            const soundcloudLink = "https://soundcloud.com/tatsumihirako/sets/kowai";  // Soundcloud link
 
             // Embed creation
             const embed = new EmbedBuilder()
