@@ -15,11 +15,11 @@ module.exports = {
   errorLog: "",  // Log error path (if required)
   nodes: [
     {
-      name: "Unknownz",
-      password: "unknownz",
-      host: "de1.bot-hosting.net",
-      port:  20773,
-      secure: false
+      name: "hirako",
+      password: "hirakolovessex",
+      host: "0.0.0.0",
+      port:  12322,
+      secure: true
     }
   ],
 }
